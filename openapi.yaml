@@ -1,0 +1,52 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: hoge hoge
+servers:
+  - url: 'http://localhost:8080'
+paths:
+  /contents:
+    post:
+      summary: Create a content
+      operationId: postContent
+      tags:
+        - content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContentRequest'
+      responses:
+        '204':
+          description: no content
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      required:
+        - message
+        - errors
+      properties:
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: object
+    ContentRequest:
+      type: object
+      required:
+        - name
+        - description
+      properties:
+        name:
+          type: string
+        description:
+          type: string
